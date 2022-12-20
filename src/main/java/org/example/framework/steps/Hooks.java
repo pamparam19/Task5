@@ -12,7 +12,7 @@ import org.openqa.selenium.TakesScreenshot;
 
 
 public class Hooks {
-    private final DriverManager driverManager = DriverManager.getDriverManager();
+    private  DriverManager driverManager = DriverManager.getDriverManager();
 
 
     @Before

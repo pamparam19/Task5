@@ -11,9 +11,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class BasePage {
     protected final DriverManager driverManager = DriverManager.getDriverManager();
-    protected PageManager pageManager = PageManager.getPageManager();
+    protected PageManager pageManager = new PageManager().getPageManager();
     protected Actions action = new Actions(driverManager.getDriver());
     protected JavascriptExecutor js = (JavascriptExecutor) driverManager.getDriver();
     protected WebDriverWait wait = new WebDriverWait(driverManager.getDriver(), 20, 10000);
@@ -31,6 +33,10 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+//    protected WebElement waitUntilLocated(WebElement element) {
+//        return wait.until(ExpectedConditions.presenceOfElementLocated(element));
+//    }
+
     protected WebElement scrollToElementJs(WebElement element) {
         js.executeScript("arguments[0].scrollIntoView(true);", element);
         return element;
@@ -43,13 +49,17 @@ public class BasePage {
         field.sendKeys(value);
     }
 
-    protected void checkDates(WebElement elementYear, WebElement elementDay, String tDate){
-        Assert.assertEquals("Год выезда выбран неправильно",tDate.substring(6),
-                elementYear.getAttribute("data-year"));
-        Assert.assertEquals("Месяц выезда выбран неправильно",String.valueOf(Integer.valueOf(tDate.substring(3,5))-1),
-                elementYear.getAttribute("data-month"));
-        Assert.assertEquals("День выезда выбран неправильно",tDate.substring(0,2),
-                elementDay.getText());
+    protected WebElement checkList(String name, List<WebElement> list){
+        for (WebElement element : list) {
+            waitUntilVisible(element);
+            if (element.getText().contains(name)){
+                return element;
+            }
+        }
+        Assert.fail("Элемент с наименованием '" + name + "' отсутствует " +
+                "на странице ");
+        return null;
     }
+
 
 }

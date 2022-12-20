@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class DriverManager {
-    private WebDriver driver;
+    private WebDriver driver = null;
 
     private static DriverManager instance = null;
     private final TestPropManager props = TestPropManager.getTestPropManager();

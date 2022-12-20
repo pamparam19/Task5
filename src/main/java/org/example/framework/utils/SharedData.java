@@ -1,2 +1,5 @@
-package org.example.framework.utils;public class SharedData {
+package org.example.framework.utils;
+
+public class SharedData {
+    public String productName;
 }
